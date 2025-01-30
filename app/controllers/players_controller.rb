@@ -1,4 +1,6 @@
 class PlayersController < ApplicationController
+  before_action :set_player, only: [:edit, :update]
+
   def index
     @players = Player.order(:name)
   end
@@ -31,7 +33,7 @@ class PlayersController < ApplicationController
   private
 
   def set_player
-    @Player.find(params[:id])
+    @player = Player.find(params[:id])
   end
 
   def player_params

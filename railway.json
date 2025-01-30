@@ -1,0 +1,7 @@
+{
+  "deploy": {
+    "volumes": {
+      "/storage": "persistent"
+    }
+  }
+}
