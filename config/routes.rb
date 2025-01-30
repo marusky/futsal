@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  patch "players_teams/update"
-
+  resources :players, except: :destroy
   resources :games, only: [:show, :create] do
     member do
       get "matches", to: "games#matches"
