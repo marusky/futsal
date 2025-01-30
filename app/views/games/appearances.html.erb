@@ -1,0 +1,12 @@
+<div class='flex justify-start items-center gap-3'>
+  <%= link_to 'Zápasy', matches_game_path(@game), class: 'px-4 py-2 bg-gray-800 rounded-full' %>
+  <%= link_to 'Strelci', appearances_game_path(@game), class: 'px-4 py-2 bg-gray-500 rounded-full' %>
+  <%= button_to 'Ukončiť', finish_game_path(@game), class: 'px-4 py-2 bg-rose-500/70 rounded-full', method: :patch %>
+</div>
+<div class='mt-4 space-y-4'>
+  <% @players.each do |player| %>
+    <div class='p-4 bg-gray-900 rounded-lg flex justify-between items-center'>
+      <%= player.name %>
+    </div>
+  <% end %>
+</div>

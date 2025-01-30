@@ -1,0 +1,15 @@
+<div>
+  <h1 class="font-bold text-4xl">Novy tim</h1>
+  <%= form_with model: @team do |f| %>
+    <div>
+      <%= f.label :name, 'Farba / Nazov' %>
+      <%= f.text_field :name %>
+    </div>
+    <%= f.label :player_ids, 'Hraci' %>
+    <%= f.collection_select :player_ids, Player.order(:name), :id, :name, {}, multiple: true %>
+    <%= f.hidden_field :game_id, value: params[:game_id] %>
+    <div>
+      <%= f.submit 'Vytvorit Team' %>
+    </div>
+  <% end %>
+</div>

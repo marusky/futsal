@@ -1,0 +1,7 @@
+Kto bude hrat ako prvy?
+
+<%= form_with url: matches_path do |f| %>
+  <%= f.collection_checkboxes :team_ids, @game.teams.order(:name), :id, :name %>
+  <%= f.hidden_field :game_id, value: params[:game_id] %>
+  <%= f.submit %>
+<% end %>

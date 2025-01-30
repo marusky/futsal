@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_24_185522) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_27_174714) do
+  create_table "appearances", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "team_id", null: false
+    t.integer "goals"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_appearances_on_player_id"
+    t.index ["team_id"], name: "index_appearances_on_team_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
@@ -21,6 +31,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_185522) do
     t.integer "game_id", null: false
     t.integer "team_1_id", null: false
     t.integer "team_2_id", null: false
+    t.integer "goals_team_1", default: 0, null: false
+    t.integer "goals_team_2", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_matches_on_game_id"
@@ -34,16 +46,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_185522) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "players_teams", id: false, force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "team_id", null: false
-    t.integer "goals"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["player_id"], name: "index_players_teams_on_player_id"
-    t.index ["team_id"], name: "index_players_teams_on_team_id"
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.integer "game_id", null: false
@@ -52,10 +54,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_185522) do
     t.index ["game_id"], name: "index_teams_on_game_id"
   end
 
+  add_foreign_key "appearances", "players"
+  add_foreign_key "appearances", "teams"
   add_foreign_key "matches", "games"
-  add_foreign_key "matches", "team_1s"
-  add_foreign_key "matches", "team_2s"
-  add_foreign_key "players_teams", "players"
-  add_foreign_key "players_teams", "teams"
+  add_foreign_key "matches", "teams", column: "team_1_id"
+  add_foreign_key "matches", "teams", column: "team_2_id"
   add_foreign_key "teams", "games"
 end

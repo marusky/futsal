@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  patch "players_teams/update"
+
+  resources :games, only: [:show, :create] do
+    member do
+      get "matches", to: "games#matches"
+      get "appearances", to: "games#appearances"
+      patch "start", to: "games#start"
+      patch "finish", to: "games#finish"
+    end
+  end
+  resources :teams, except: [:index, :show]
+  resources :matches, only: [:new, :create, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

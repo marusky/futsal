@@ -1,0 +1,26 @@
+<%= turbo_stream_from(:matches) %>
+
+<div class='flex justify-start items-center gap-3'>
+  <%= link_to 'Zápasy', matches_game_path(@game), class: 'px-4 py-2 bg-gray-500 rounded-full' %>
+  <%= link_to 'Strelci', appearances_game_path(@game), class: 'px-4 py-2 bg-gray-800 rounded-full' %>
+</div>
+<% @matches.in_groups_of(3, false) do |batch| %>
+  <% batch.each do |match| %>
+    <div class='mt-4 space-y-4'>
+      <%= render 'matches/match', match: %>
+    </div>
+  <% end %>
+  <div class='h-px bg-gray-700 my-6'></div>
+<% end %>
+
+<div class='mt-6 flex justify-center items-center'>
+  <% if @matches.count == 1 %>
+    <%= link_to new_match_path(game_id: @game.id) do %>
+      <div class='bg-indigo-500 w-10 h-10 flex justify-center items-center text-2xl rounded-full'>+</div>
+    <% end %>
+  <% else %>
+    <%= button_to matches_path(game_id: @game.id) do %>
+      <div class='bg-indigo-500 w-10 h-10 flex justify-center items-center text-2xl rounded-full'>+</div>
+    <% end %>
+  <% end %>
+</div>
