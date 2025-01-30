@@ -23,8 +23,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class='bg-gray-950 text-gray-50'>
-    <main class="container mx-auto p-5">
+  <body class='bg-zinc-900 text-zinc-50'>
+    <%= render 'pages/header' %>
+    <main class="container mt-16 mx-auto p-5">
       <%= yield %>
     </main>
   </body>

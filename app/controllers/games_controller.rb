@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  helper_method :is_game_creator?
   before_action :set_game, only: [:show, :matches, :appearances, :start, :finish]
 
   def show
@@ -8,6 +9,7 @@ class GamesController < ApplicationController
     return unless Game.being_created.empty?
     
     @game = Game.create
+    cookies[:game_sgid] = @game.to_sgid
 
     redirect_to @game
   end
@@ -39,5 +41,9 @@ class GamesController < ApplicationController
 
   def set_game
     @game = Game.find(params[:id])
+  end
+
+  def is_game_creator?(game)
+    game === GlobalID::Locator.locate_signed(cookies[:game_sgid])
   end
 end

@@ -1,16 +1,41 @@
-<div>
-  <h1 class="font-bold text-4xl">Timy</h1>
-  <ul>
-    <% @game.teams.each do |team| %>
-      <li>
-        <%= team.name %> -
-        <% team.players.each do |player| %>
-          <%= player.name %>
-        <% end %>
-      </li>
+<% content_for :back do %>
+  <%= link_to root_path, class: 'text-sky-500' do %>
+    &lt; Domov
+  <% end %>
+<% end %>
+<%= content_for(:header, "Tvorba tímov")%>
+<% if is_game_creator?(@game) %>
+  <%= content_for :action do %>
+    <%= link_to new_team_path(game_id: @game.id) do %>
+      <div class='px-3 py-1.5 bg-indigo-600 font-medium rounded-xl'>
+        Pridať
+      </div>
     <% end %>
-  </ul>
-  <%= link_to 'Plus', new_team_path(game_id: @game.id) %>
-
-  <%= button_to 'Zacat hru', start_game_path(@game), method: :patch %>
+  <% end %>
+<% end %>
+<div>
+  <% if is_game_creator?(@game) %>
+    <% if @game.teams.none? %>
+      <%= link_to new_team_path(game_id: @game.id) do %>
+        <div class='p-4 text-zinc-500 border border-dashed border-zinc-600 rounded-xl text-center'>
+          Zatiaľ tu nie je žiadny tím. 
+          <br />
+          Klikni na tlačidlo <span class='font-bold text-indigo-400'>Pridať</span>,
+          <br />
+          aby si pridal prvý.
+        </div>
+      <% end %>
+    <% else %>
+      <% @game.teams.each do |team| %>
+        <%= team.name %>
+      <% end %>
+    <% end %>
+  <% else %>
+  <div class='mt-4 px-4 text-zinc-300 text-center'>
+    Niekto už maká na tom, aby tu naklikal dnešné tímy.
+    Hneď ako sa mu to podarí, uvidíš ich tu aj ty.
+  </div>
+  <% end %>
 </div>
+
+<%= button_to 'Zacat hru', start_game_path(@game), method: :patch %>

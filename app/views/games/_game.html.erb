@@ -1,0 +1,34 @@
+<%= link_to game, class: 'block' do %>
+  <div class='p-5 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl flex justify-between items-center'>
+    <h3 class='text-xl'>
+      <%= game.created_at.strftime('%d. %m.') %>
+    </h3>
+    <div class='flex gap-4'>
+      <% if game.being_created? %>
+        <span class=''>
+          Vytvára sa
+        </span>
+        <div class='relative'>
+          <div class='blur w-4 h-4 bg-blue-500 rounded-full'></div>
+          <div class='w-4 h-4 bg-blue-500 rounded-full absolute inset-1/2 -translate-x-1/2 -translate-y-1/2'></div>
+        </div>
+      <% elsif game.started? %>
+        <span class=''>
+          Práve prebieha
+        </span>
+        <div class='relative'>
+          <div class='blur w-4 h-4 bg-rose-500 rounded-full'></div>
+          <div class='w-4 h-4 bg-rose-500 rounded-full absolute inset-1/2 -translate-x-1/2 -translate-y-1/2'></div>
+        </div>
+      <% else %>
+        <span class='text-zinc-600'>
+          Ukončená
+        </span>
+        <div class='relative'>
+          <div class='blur w-4 h-4 bg-zinc-600 rounded-full'></div>
+          <div class='w-4 h-4 bg-zinc-600 rounded-full absolute inset-1/2 -translate-x-1/2 -translate-y-1/2'></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
