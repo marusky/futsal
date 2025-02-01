@@ -14,7 +14,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_174714) do
   create_table "appearances", force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "team_id", null: false
-    t.integer "goals"
+    t.integer "goals", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_appearances_on_player_id"

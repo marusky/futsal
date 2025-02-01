@@ -6,6 +6,9 @@ class MatchesController < ApplicationController
   end
   
   def create
+    puts '----'
+    puts params
+    puts '----'
     @match = MatchService.new(game: @game, team_ids:).new_match
 
     if @match.save
@@ -33,11 +36,10 @@ class MatchesController < ApplicationController
   end
 
   def team_ids
-    return if params[:team_ids].nil?
+    ids = params.keys.map{ |key| key.delete_prefix 'team_id_' if key.to_s.start_with? 'team_id_' }.compact
+    return unless ids.count == 2
 
-    params[:team_ids].reject!(&:empty?)
-
-    { team_1_id: params[:team_ids][0], team_2_id: params[:team_ids][1] }
+    { team_1_id: ids[0], team_2_id: ids[1] }
   end
 
   def match_update_params

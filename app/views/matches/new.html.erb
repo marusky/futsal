@@ -1,7 +1,29 @@
-Kto bude hrat ako prvy?
+<% content_for :header, 'Zápasy' %>
 
-<%= form_with url: matches_path do |f| %>
-  <%= f.collection_checkboxes :team_ids, @game.teams.order(:name), :id, :name %>
-  <%= f.hidden_field :game_id, value: params[:game_id] %>
-  <%= f.submit %>
+<h2 class='font-medium'>
+  <% if @game.matches.none? %>
+    Kto hrá ako prvý?
+  <% else %>
+    Kto hrá druhý zápas?
+  <% end %>
+</h2>
+<%= form_with url: matches_path, class: 'mt-4' do |f| %>
+  <div class='space-y-3'>
+    <% @game.teams.order(:name).each do |team| %>
+      <label class="cursor-pointer border border-zinc-700 p-4 rounded-xl text-zinc-500 transition duration-200 flex items-center gap-3"
+        data-controller="team-selection"
+        data-action="click->team-selection#toggle"
+        data-team-selection-target="label">
+        
+        <%= f.checkbox :"team_id_#{team.id}", class: "hidden", include_hidden: false, data: { team_selection_target: "checkbox" } %>
+
+        <div class="w-5 h-5 border border-zinc-500 rounded-md flex-shrink-0 transition duration-100"
+          data-team-selection-target="indicator"></div>
+
+        <span><%= team.name %></span>
+      </label>
+    <% end %>
+    <%= f.hidden_field :game_id, value: params[:game_id] %>
+  </div>
+  <%= f.submit 'Hráme!', class: 'text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/20' %>
 <% end %>

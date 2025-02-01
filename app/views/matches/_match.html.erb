@@ -1,13 +1,13 @@
-<div id="<%= dom_id(match) %>" class='p-4 bg-gray-900 rounded-lg'>
+<div id="<%= dom_id(match) %>" class='px-5 py-6 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl'>
   <%= form_with model: match, data: { controller: 'auto-submit' } do |f| %>
     <div class='flex justify-between items-center'>
       <div>
         <%= match.team_1.name %>
       </div>
       <div class='absolute left-1/2 -translate-x-1/2 space-x-2'>
-        <%= f.number_field :goals_team_1, data: { action: 'click->auto-submit#select auto-submit#submit' }, inputmode: :numeric, required: true, class: 'w-8 h-8 rounded-md bg-gray-600 text-center font-semibold' %>
+        <%= f.number_field :goals_team_1, data: { action: 'click->auto-submit#select auto-submit#submit' }, inputmode: :numeric, required: true, class: 'w-10 h-12 rounded-md bg-zinc-600 text-center font-semibold' %>
         <span class='font-semibold'>:</span>
-        <%= f.number_field :goals_team_2, data: { action: 'click->auto-submit#select auto-submit#submit' }, inputmode: :numeric, required: true, class: 'w-8 h-8 rounded-md bg-gray-600 text-center font-semibold' %>
+        <%= f.number_field :goals_team_2, data: { action: 'click->auto-submit#select auto-submit#submit' }, inputmode: :numeric, required: true, class: 'w-10 h-12 rounded-md bg-zinc-600 text-center font-semibold' %>
       </div>
       <div>
         <%= match.team_2.name %>

@@ -1,0 +1,21 @@
+<div id="<%= dom_id(appearance) %>" class='p-4 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl flex justify-between items-center', data-controller='goals'>
+  <div>
+    <%= appearance.name %>
+  </div>
+  <div class='flex justify-center items-center gap-2'>
+    <div class='w-10 h-10 rounded-full bg-rose-400 flex justify-center items-center text-2xl' data-action='click->goals#minus'>
+      -
+    </div>
+    <div>
+      <%= form_with model: appearance, data: { controller: 'auto-submit', auto_submit_delay_value: 500 } do |f| %>
+        <%= f.number_field :goals, 
+                    class: 'text-xl w-8 h-8 bg-zinc-800 text-zinc-50 text-center', 
+                    data: { goals_target: :goals, action: 'auto-submit#submit' } 
+                  %>
+      <% end %>
+    </div>
+    <div class='w-10 h-10 rounded-full bg-indigo-400 flex justify-center items-center text-2xl' data-action='click->goals#plus'>
+      +
+    </div>
+  </div>
+</div>

@@ -3,6 +3,14 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :matches, :appearances, :start, :finish]
 
   def show
+    if @game.started?
+      @matches = @game.matches.order(:created_at).includes(:team_1, :team_2)
+      @appearances = 
+        Appearance
+          .joins(team: :game)
+          .includes(:player)
+          .where(game: { id: @game.id })
+    end
   end
 
   def create
