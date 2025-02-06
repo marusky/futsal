@@ -6,13 +6,10 @@ class MatchesController < ApplicationController
   end
   
   def create
-    puts '----'
-    puts params
-    puts '----'
     @match = MatchService.new(game: @game, team_ids:).new_match
 
     if @match.save
-      redirect_to matches_game_url(@match.game)    
+      redirect_to @match.game
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,7 +20,7 @@ class MatchesController < ApplicationController
 
     if @match.update(match_update_params)
       respond_to do |format|
-        format.html { redirect_to live_game_url(@match.game) }
+        format.html { redirect_to @game }
         format.turbo_stream
       end
     end

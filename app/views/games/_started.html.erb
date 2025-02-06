@@ -6,7 +6,7 @@
 <%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
 <%# <% if is_game_creator?(@game) %>
 <%= content_for :action do %>
-  <%= button_to finish_game_path(game_id: @game.id) do %>
+  <%= button_to finish_game_path(game_id: @game.id), method: :patch, data: { turbo_confirm: 'Si si istý, že chceš ukončiť túto hru? Už v nej nebude možné meniť skóre zápasov ani počet strelených gólov jedndnotlivých hráčov.' } do %>
     <div class='px-3 py-1.5 bg-rose-500 font-medium rounded-xl'>
       Ukončiť
     </div>

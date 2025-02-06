@@ -1,0 +1,9 @@
+<% content_for :back do %>
+  <%= link_to root_path, class: 'text-sky-500' do %>
+    &lt; Domov
+  <% end %>
+<% end %>
+<%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
+
+Na stránke sa pracuje (občas).
+

@@ -2,4 +2,6 @@
   <%= render 'being_created' %>
 <% elsif @game.started? %>
   <%= render 'started' %>
+<% elsif @game.finished? %>
+  <%= render 'finished' %>
 <% end %>
