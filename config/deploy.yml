@@ -7,7 +7,7 @@ image: mrshq/futball
 # Deploy to these servers.
 servers:
   web:
-    - 141.147.50.148
+    - futball.sk
   # job:
   #   hosts:
   #     - 192.168.0.1
