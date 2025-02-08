@@ -8,7 +8,7 @@
     </div>
     <div>
       <%= form_with model: appearance, data: { controller: 'auto-submit', auto_submit_delay_value: 500 } do |f| %>
-        <%= f.number_field :goals, 
+        <%= f.number_field :goals, readonly: true,
                     class: 'text-xl w-8 h-8 bg-zinc-800 text-zinc-50 text-center', 
                     data: { goals_target: :goals, action: 'auto-submit#submit' } 
                   %>

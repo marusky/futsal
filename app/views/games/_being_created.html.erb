@@ -13,7 +13,7 @@
     <% end %>
   <% end %>
 <% end %>
-<div>
+<div class='<%= dom_id @game %>'>
   <% if is_game_creator?(@game) %>
     <% if @game.teams.none? %>
       <%= link_to new_team_path(game_id: @game.id) do %>
@@ -51,7 +51,7 @@
         Začať hru
       </div>
     <% else %>
-      <%= button_to start_game_path(@game), method: :patch do %>
+      <%= link_to new_match_path(game_id: @game.id) do %>
         <div class='text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30'>
           Začať hru
         </div>

@@ -1,14 +1,21 @@
 class MatchesController < ApplicationController
+  include Turbo::Broadcastable
   before_action :set_game, only: [:new, :create]
 
   def new
+    # TODO: Add alert message
+    return redirect_to root_path if @game.matches.count >= 2
     @match = Match.new
   end
   
   def create
-    @match = MatchService.new(game: @game, team_ids:).new_match
+    match_service = MatchService.new(game: @game, team_ids:)
+    @match = match_service.new_match
 
     if @match.save
+      @game.started!
+      return redirect_to @match.game if match_service.teams_selected_by_user?
+
       respond_to do |format|
         format.html { redirect_to @match.game }
         format.turbo_stream

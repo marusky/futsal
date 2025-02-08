@@ -5,5 +5,7 @@
 <% end %>
 <%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
 
-Na stránke sa pracuje (občas).
+<div class='<%= dom_id @game %>'>
+  Na stránke sa pracuje (občas).
+</div>
 

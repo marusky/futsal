@@ -1,3 +1,5 @@
+<%= turbo_stream_from(:games) %>
+
 <% if @game.being_created? %>
   <%= render 'being_created' %>
 <% elsif @game.started? %>

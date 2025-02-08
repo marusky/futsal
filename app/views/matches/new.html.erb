@@ -1,10 +1,15 @@
+<% content_for :back do %>
+  <%= link_to game_path(params[:game_id]), class: 'text-sky-500' do %>
+    &lt; Späť
+  <% end %>
+<% end %>
 <% content_for :header, 'Zápasy' %>
 
 <h2 class='font-medium'>
-  <% if @game.matches.none? %>
-    Kto hrá ako prvý?
-  <% else %>
+  <% if @game.matches.exists? %>
     Kto hrá druhý zápas?
+  <% else %>
+    Kto hrá ako prvý?
   <% end %>
 </h2>
 <%= form_with url: matches_path, class: 'mt-4' do |f| %>
@@ -23,6 +28,10 @@
         <span><%= team.name %></span>
       </label>
     <% end %>
+    <% if @match.errors.any? %>
+      <%= @match.errors.full_messages.join(', ') %>
+    <% end %>
+    <div></div>
     <%= f.hidden_field :game_id, value: params[:game_id] %>
   </div>
   <%= f.submit 'Hráme!', class: 'text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/20' %>
