@@ -25,15 +25,17 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  # config.assume_ssl = true
 
-  # config.action_dispatch.trusted_proxies = ['0.0.0.0/0', '::/0']
+  config.action_dispatch.trusted_proxies = ['0.0.0.0/0', '::/0']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -82,11 +84,16 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    "futsall.sk",
-    "www.futsall.sk",
-    # /.*\.futsall\.sk/ # Allow requests from subdomains like `www.example.com`
-  ]
+  # config.hosts = [
+  #   172.18.0.2,
+    # "futball.sk",
+    # "www.futball.sk",
+    # /.*\.futball\.sk/ # Allow requests from subdomains like `www.example.com`
+  # ]
+
+  # config.hosts << "localhost"
+  # config.hosts << "127.0.0.1"
+  # config.hosts << "141.147.50.148"
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }

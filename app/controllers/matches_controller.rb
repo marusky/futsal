@@ -9,7 +9,10 @@ class MatchesController < ApplicationController
     @match = MatchService.new(game: @game, team_ids:).new_match
 
     if @match.save
-      redirect_to @match.game
+      respond_to do |format|
+        format.html { redirect_to @match.game }
+        format.turbo_stream
+      end
     else
       render :new, status: :unprocessable_entity
     end

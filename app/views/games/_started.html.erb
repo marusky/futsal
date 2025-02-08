@@ -33,14 +33,13 @@
 
   <div class='overflow-x-hidden overflow-y-visible no-scrollbar relative h-[80vh] mt-6'>
     <div class='transition duration-300 px-1' data-tab-target='tabone'>
-      <% @matches.in_groups_of(3, false) do |batch| %>
-        <div class='space-y-4'>
-          <% batch.each do |match| %>
+      <div id='matches' class=''>
+        <% @matches.in_groups_of(3, false).each_with_index do |batch, index| %>
+          <% batch.each.with_index do |match| %>
             <%= render 'matches/match', match: %>
           <% end %>
-        </div>
-        <div class='h-px bg-zinc-700 my-6'></div>
-      <% end %>
+        <% end %>
+      </div>
 
       <div class='mt-6'>
         <% if @matches.count == 1 %>
