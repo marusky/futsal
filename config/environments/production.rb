@@ -91,10 +91,6 @@ Rails.application.configure do
     # /.*\.futball\.sk/ # Allow requests from subdomains like `www.example.com`
   # ]
 
-  # config.hosts << "localhost"
-  # config.hosts << "127.0.0.1"
-  # config.hosts << "141.147.50.148"
-  #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
