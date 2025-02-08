@@ -14,7 +14,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    return unless Game.being_created.empty?
+    return redirect_to Game.being_created.first if Game.being_created.exists?
     
     @game = Game.create
     cookies[:game_sgid] = @game.to_sgid
