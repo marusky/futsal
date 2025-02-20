@@ -4,17 +4,25 @@ class StatisticsService
     @matches = Match.where(game_id: game_ids)
   end
 
-  def total_goals_for_player(player)
+  def absolute_goals_for_player(player)
     Appearance
       .joins(:team)
       .where(player_id: player.id, team: { game_id: @game_ids })
       .sum(:goals)
   end
 
-  def total_score_for_player(player, type)
+  def relative_goals_for_player(player)
+    (absolute_goals_for_player(player) || 0 / players_appearances_count[player.id].to_f).round(2)
+  end
+
+  def absolute_score_for_player(player, type)
     team_scores
       .values_at(*players_team_ids[player.id])
       .sum { |score| score[type] }
+  end
+
+  def relative_score_for_player(player, type)
+    (absolute_score_for_player(player, type) || 0 / players_appearances_count[player.id].to_f).round(2)
   end
 
   private
@@ -47,5 +55,9 @@ class StatisticsService
       .select(:player_id, team: { id: :team_id })
       .group_by(&:player_id)
       .transform_values { |records| records.map(&:team_id) }
+  end
+
+  def players_appearances_count
+    @_players_appearances_count ||= Appearance.group(:player_id).count
   end
 end

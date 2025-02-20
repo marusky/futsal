@@ -5,25 +5,5 @@
 <% end %>
 <%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
 
-<table class='w-full'>
-  <thead class='border-b border-neutral-700'>
-    <th class='text-left pl-4 py-3'>Meno</th>
-    <th class='text-center'>Góly</th>
-    <th class='text-center'>Výhry</th>
-    <th class='text-center'>Remízy</th>
-    <th class='text-center'>Prehry</th>
-  </thead>
-  <tbody>
-    <% @players.each do |player| %>
-      <tr class='odd:bg-neutral-800'>
-        <td class='py-3 pl-4'><%= player.name %></td>
-        <td class='text-center'><%= @service.total_goals_for_player(player) %></td>
-        <td class='text-center'><%= @service.total_score_for_player(player, :wins) %></td>
-        <td class='text-center'><%= @service.total_score_for_player(player, :draws) %></td>
-        <td class='text-center'><%= @service.total_score_for_player(player, :loses) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<%= render 'shared/statistics_table' %>
 
