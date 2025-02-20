@@ -12,7 +12,9 @@ class StatisticsService
   end
 
   def relative_goals_for_player(player)
-    (absolute_goals_for_player(player) || 0 / players_appearances_count[player.id].to_f).round(2)
+    return '-' unless players_appearances_count.fetch(player.id, 0).positive?
+
+    (absolute_goals_for_player(player) / players_appearances_count[player.id].to_f).round(2)
   end
 
   def absolute_score_for_player(player, type)
@@ -22,7 +24,9 @@ class StatisticsService
   end
 
   def relative_score_for_player(player, type)
-    (absolute_score_for_player(player, type) || 0 / players_appearances_count[player.id].to_f).round(2)
+    return '-' unless appearances_for_player(player).positive?
+
+    (absolute_score_for_player(player, type) / players_appearances_count[player.id].to_f).round(2)
   end
 
   private
@@ -55,6 +59,10 @@ class StatisticsService
       .select(:player_id, team: { id: :team_id })
       .group_by(&:player_id)
       .transform_values { |records| records.map(&:team_id) }
+  end
+
+  def appearances_for_player(player)
+    players_appearances_count.fetch(player.id, 0)
   end
 
   def players_appearances_count

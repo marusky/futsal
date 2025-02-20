@@ -1,28 +1,46 @@
+<% with_relative_values ||= false %>
+
 <div class='overflow-x-scroll no-scrollbar'>
   <table class='min-w-full table table-fixed' data-controller="sort-table">
     <thead class='border-b border-neutral-700'>
       <th class='text-left px-3 py-3' data-action="click->sort-table#sort">Meno</th>
       <th class='text-center px-3' data-action="click->sort-table#sort">Góly</th>
-      <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% if with_relative_values %>
+        <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% end %>
       <th class='text-center px-3' data-action="click->sort-table#sort">Výhry</th>
-      <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% if with_relative_values %>
+        <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% end %>
       <th class='text-center px-3' data-action="click->sort-table#sort">Remízy</th>
-      <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% if with_relative_values %>
+        <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% end %>
       <th class='text-center px-3' data-action="click->sort-table#sort">Prehry</th>
-      <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% if with_relative_values %>
+        <th class='text-center px-3' data-action="click->sort-table#sort">(na hru)</th>
+      <% end %>
     </thead>
     <tbody>
       <% @players.each do |player| %>
         <tr class='odd:bg-neutral-800' data-sort-table-target="row">
           <td class='py-3 pl-3'><%= player.name %></td>
           <td class='text-center px-3'><%= @service.absolute_goals_for_player(player) %></td>
-          <td class='text-center px-3'><%= @service.relative_goals_for_player(player) %></td>
+          <% if with_relative_values %>
+            <td class='text-center px-3'><%= @service.relative_goals_for_player(player) %></td>
+          <% end %>
           <td class='text-center px-3'><%= @service.absolute_score_for_player(player, :wins) %></td>
-          <td class='text-center px-3'><%= @service.relative_score_for_player(player, :wins) %></td>
+          <% if with_relative_values %>
+            <td class='text-center px-3'><%= @service.relative_score_for_player(player, :wins) %></td>
+          <% end %>
           <td class='text-center px-3'><%= @service.absolute_score_for_player(player, :draws) %></td>
-          <td class='text-center px-3'><%= @service.relative_score_for_player(player, :draws) %></td>
+          <% if with_relative_values %>
+            <td class='text-center px-3'><%= @service.relative_score_for_player(player, :draws) %></td>
+          <% end %>
           <td class='text-center px-3'><%= @service.absolute_score_for_player(player, :loses) %></td>
-          <td class='text-center px-3'><%= @service.relative_score_for_player(player, :loses) %></td>
+          <% if with_relative_values %>
+            <td class='text-center px-3'><%= @service.relative_score_for_player(player, :loses) %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
