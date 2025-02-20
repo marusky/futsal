@@ -1,9 +1,4 @@
-<% content_for :back do %>
-  <%= link_to root_path, class: 'text-sky-500' do %>
-    &lt; Domov
-  <% end %>
-<% end %>
-<%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
+<%= content_for(:header, 'Štatistiky')%>
 
 <table class='w-full'>
   <thead class='border-b border-neutral-700'>
@@ -25,5 +20,3 @@
     <% end %>
   </tbody>
 </table>
-
-

@@ -1,4 +1,10 @@
+<% content_for :back do %>
+  <%= link_to players_path, class: 'text-sky-500' do %>
+    &lt; Hráči
+  <% end %>
+<% end %>
+<%= content_for(:header, 'Úprava')%>
+
 <div>
-  <h1 class="font-bold text-4xl">Players#edit</h1>
   <%= render 'form' %>
 </div>

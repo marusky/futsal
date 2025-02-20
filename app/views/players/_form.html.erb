@@ -1,5 +1,9 @@
 <%= form_with model: @player do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name, autocomplete: 'name' %>
-  <%= f.submit %>
+  <div>
+    <%= f.label :name, 'Celé meno', class: 'block text-zinc-200 font-medium' %>
+    <%= f.text_field :name, class: 'rounded-lg mt-2 outline-none bg-zinc-800 ring-1 ring-zinc-700 px-5 py-2.5 w-full focus:ring-1 focus:ring-indigo-400' %>
+  </div>
+  <div>
+    <%= f.submit 'Uložiť', class: 'text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30' %>
+  </div>
 <% end %>

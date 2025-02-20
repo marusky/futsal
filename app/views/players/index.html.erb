@@ -1,10 +1,17 @@
-<div>
-  <h1 class="font-bold text-4xl">Players#index</h1>
-  <%= link_to 'New Player', new_player_path %>
+<%= content_for(:header, 'Hráči')%>
+<%= content_for :action do %>
+  <%= link_to new_player_path do %>
+    <div class='px-3 py-1.5 bg-indigo-600 font-medium rounded-xl'>
+      Pridať
+    </div>
+  <% end %>
+<% end %>
+
+<div class='mt-4 space-y-4'>
   <% @players.each do |player| %>
-    <div>
+    <div class='p-5 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl flex justify-between items-center'>
       <%= player.name %>
-      <%= link_to 'Edit', edit_player_path(player) %>
+      <%= link_to 'Upraviť', edit_player_path(player), class: 'text-indigo-400' %>
     </div>
   <% end %>
 </div>
