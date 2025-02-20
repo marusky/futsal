@@ -43,9 +43,9 @@ class StatisticsService
     @_players_team_ids ||= Appearance
       .joins(team: :game)
       .includes(:player)
-      .where(game: { id: [@game_ids] })
-      .select(:player_id, team: [:id])
-      .group_by(&:id)
-      .transform_values { |records| records.map(&:id) }
+      .where(game: { id: @game_ids })
+      .select(:player_id, team: { id: :team_id })
+      .group_by(&:player_id)
+      .transform_values { |records| records.map(&:team_id) }
   end
 end
