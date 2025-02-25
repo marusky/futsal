@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :appearances, only: :update
   
   get "statistics", to: "pages#statistics"
+  get "charts", to: "pages#charts"
 
   get "up" => "rails/health#show", as: :rails_health_check
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
