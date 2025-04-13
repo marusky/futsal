@@ -5,5 +5,40 @@
 <% end %>
 <%= content_for(:header, @game.created_at.strftime('%d. %m.'))%>
 
+<div class='w-full flex justify-center items-end gap-4 py-12 font-semibold'>
+  <div class='bg-gradient-to-br from-gray-300 to-gray-600 text-transparent bg-clip-text'>
+    <div class='text-center mt-1 font-medium'>
+      <%= @service.teams_scores_presentable.second[:name] %>
+    </div>
+    <div class='mx-auto mt-2 w-16 h-20 bg-gradient-to-b from-gray-400 to-gray-950/0'>
+      <div class='text-center pt-4 py-1 text-lg'>
+        <%= @service.teams_scores_presentable.second[:points] %>
+      </div>
+    </div>
+  </div>
+
+  <div class='bg-gradient-to-br from-amber-400 to-amber-600 text-transparent bg-clip-text'>
+    <div class='text-center mt-1 font-medium'>
+      <%= @service.teams_scores_presentable.first[:name] %>
+    </div>
+    <div class='mx-auto mt-2 w-16 h-32 bg-gradient-to-b from-amber-300 to-amber-950/0'>
+      <div class='text-center pt-4 py-1 text-lg'>
+        <%= @service.teams_scores_presentable.first[:points] %>
+      </div>
+    </div>
+  </div>
+
+  <div class='bg-gradient-to-br from-amber-500 to-amber-900 text-transparent bg-clip-text'>
+    <div class='text-center mt-1 font-medium'>
+      <%= @service.teams_scores_presentable.third[:name] %>
+    </div>
+    <div class='mx-auto mt-2 w-16 h-16 bg-gradient-to-b from-amber-700 to-amber-950/0'>
+      <div class='text-center pt-4 py-1 text-lg'>
+        <%= @service.teams_scores_presentable.third[:points] %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%= render 'shared/statistics_table' %>
 

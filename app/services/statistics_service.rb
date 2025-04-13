@@ -29,6 +29,15 @@ class StatisticsService
     (absolute_score_for_player(player, type) / players_appearances_count[player.id].to_f).round(2)
   end
 
+  def teams_scores_presentable
+    Team.where(id: team_scores.keys).map do |team|
+      { 
+        name: team.name,
+        points: 3 * team_scores[team.id][:wins] + team_scores[team.id][:draws],
+      }
+    end.sort { |team_obj| team_obj[:points] }.reverse
+  end
+
   private
 
   def team_scores
