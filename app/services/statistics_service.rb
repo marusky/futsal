@@ -35,7 +35,7 @@ class StatisticsService
         name: team.name,
         points: 3 * team_scores[team.id][:wins] + team_scores[team.id][:draws],
       }
-    end.sort { |team_obj| team_obj[:points] }.reverse
+    end.sort_by { |team_obj| team_obj[:points] }.reverse
   end
 
   private
