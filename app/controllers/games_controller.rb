@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   helper_method :is_game_creator?
-  before_action :set_game, only: [:show, :matches, :appearances, :start, :finish]
+  before_action :set_game, only: [:show, :matches, :destroy, :appearances, :start, :finish]
 
   def show
     if @game.started?
@@ -32,6 +32,16 @@ class GamesController < ApplicationController
     cookies[:game_sgid] = @game.to_sgid
 
     redirect_to @game
+  end
+
+  def destroy
+    return redirect_to @game, alert: 'Už sa hrá.' unless @game.being_created?
+
+    if @game.destroy
+      redirect_to root_url
+    else
+      redirect_to @game
+    end
   end
 
   def matches

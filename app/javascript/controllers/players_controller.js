@@ -1,13 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['players']
+  static targets = ['players', 'select']
+
   connect() {
-    // console.log('helou')
-    // console.log(this.playersTarget)
+    this.showSelectedPlayers({ target: this.selectTarget });
   }
 
-  show_selected_players({ target }) {
+  showSelectedPlayers({ target }) {
     var html = '';
     Array.from(target.selectedOptions).forEach((option) => {
       html += `${option.text}<br />`

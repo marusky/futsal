@@ -1,8 +1,11 @@
 <%= content_for(:header, 'Futsal Prešov')%>
 <%= content_for :action do %>
-  <%= button_to games_path do %>
-    <div class='px-3 py-1.5 bg-indigo-600 font-medium rounded-xl'>
+  <%= button_to games_path, form_class: 'group' do %>
+    <div class='group-aria-busy:hidden w-24 py-1.5 bg-indigo-600 font-medium rounded-xl'>
       Nová hra
+    </div>
+    <div class='hidden group-aria-busy:block w-24 py-1.5 bg-indigo-400 font-medium rounded-xl'>
+      <%= icon 'fa-solid', 'spinner', class: 'animate-spin' %>
     </div>
   <% end %>
 <% end %>

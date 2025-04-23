@@ -4,7 +4,6 @@
   <% end %>
 <% end %>
 <%= content_for(:header, "Tvorba tímov")%>
-<% if is_game_creator?(@game) %>
   <%= content_for :action do %>
     <%= link_to new_team_path(game_id: @game.id) do %>
       <div class='px-3 py-1.5 bg-indigo-600 font-medium rounded-xl'>
@@ -12,55 +11,49 @@
       </div>
     <% end %>
   <% end %>
-<% end %>
 <div class='<%= dom_id @game %>'>
-  <% if is_game_creator?(@game) %>
-    <% if @game.teams.none? %>
-      <%= link_to new_team_path(game_id: @game.id) do %>
-        <div class='p-4 text-zinc-500 border border-dashed border-zinc-600 rounded-xl text-center'>
-          Zatiaľ tu nie je žiadny tím. 
-          <br />
-          Klikni na tlačidlo <span class='font-bold text-indigo-400'>Pridať</span>,
-          <br />
-          aby si pridal prvý.
-        </div>
-      <% end %>
-    <% else %>
-      <div class='space-y-4'>
-        <% @game.teams.each do |team| %>
-          <div class='p-5 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl flex justify-between items-center'>
-            <div>
-              <h3 class='text-lg font-medium'><%= team.name %></h3>
-              <div class='mt-2 text-sm'>
-                <% team.players.each do |player| %>
-                  <div class='text-zinc-400'>
-                    <%= player.name %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-            <div class='text-4xl text-zinc-500 mr-8'>
-              <%= team.players.count %>
-            </div>
-          </div>
+  <% if @game.teams.none? %>
+    <%= link_to new_team_path(game_id: @game.id) do %>
+      <div class='p-4 text-zinc-500 border border-dashed border-zinc-600 rounded-xl text-center'>
+        Zatiaľ tu nie je žiadny tím. 
+        <br />
+        Klikni na tlačidlo <span class='font-bold text-indigo-400'>Pridať</span>,
+        <br />
+        aby si pridal prvý.
+      </div>
+    <% end %>
+  <% else %>
+    <div class='space-y-4'>
+      <% @game.teams.each do |team| %>
+        <%= link_to edit_team_path(team), class: 'block' do %>
+          <%= render 'teams/team', team: %>
         <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class='fixed bottom-12 left-4 right-4 space-y-4'>
+    <%= button_to game_path(@game), 
+                  method: :delete, 
+                  class: 'w-full',
+                  form_class: 'group',
+                  data: { turbo_confirm: 'Si si istý?' } do %>
+      <div class='group-aria-busy:hidden bg-rose-500 shadow-rose-600/30 text-center shadow-md px-5 py-4 rounded-xl'>
+        Vymazať hru
+      </div>
+      <div class='hidden group-aria-busy:block bg-rose-400 shadow-rose-600/30 text-center shadow-md px-5 py-4 rounded-xl'>
+        <%= icon 'fa-solid', 'spinner', class: 'animate-spin' %>
       </div>
     <% end %>
     <% if @game.teams.count < 2 %>
-      <div class='text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl text-zinc-600 bg-zinc-800 shadow-zinc-800/30'>
+      <div class='text-center shadow-md px-5 py-4 rounded-xl text-zinc-600 bg-zinc-800 shadow-zinc-800/30'>
         Začať hru
       </div>
     <% else %>
-      <%= link_to new_match_path(game_id: @game.id) do %>
-        <div class='text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30'>
+      <%= link_to new_match_path(game_id: @game.id), class: 'block text-center shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30' do %>
+        <div class=''>
           Začať hru
         </div>
       <% end %>
     <% end %>
-  <% else %>
-    <div class='mt-4 px-4 text-zinc-300 text-center'>
-      Niekto už maká na tom, aby tu naklikal dnešné tímy.
-      Hneď ako sa mu to podarí, uvidíš ich tu aj ty.
-    </div>
-  <% end %>
+  </div>
 </div>

@@ -1,4 +1,9 @@
-<div>
-  <h1 class="font-bold text-4xl">Teams#edit</h1>
-  <p>Find me in app/views/teams/edit.html.erb</p>
+<% content_for :back do %>
+  <%= link_to game_path(@team.game), class: 'text-sky-500' do %>
+    &lt; Tvorba tímov
+  <% end %>
+<% end %>
+<%= content_for :header, 'Úprava tímu' %>
+<div data-controller='players'>
+  <%= render 'form' %>
 </div>

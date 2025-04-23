@@ -1,23 +1,9 @@
 <% content_for :back do %>
-  <%= link_to game_path(params[:game_id]), class: 'text-sky-500' do %>
+  <%= link_to game_path(@team.game), class: 'text-sky-500' do %>
     &lt; Tvorba tímov
   <% end %>
 <% end %>
 <%= content_for :header, 'Nový tím' %>
 <div data-controller='players'>
-  <%= form_with model: @team do |f| %>
-    <div>
-      <%= f.label :name, 'Názov tímu (farba)', class: 'block text-zinc-200 font-medium' %>
-      <%= f.text_field :name, class: 'rounded-lg mt-2 outline-none bg-zinc-800 ring-1 ring-zinc-700 px-5 py-2.5 w-full focus:ring-1 focus:ring-indigo-400' %>
-    </div>
-    <div class='mt-6'>
-      <%= f.label :player_ids, 'Hráči', class: 'block text-zinc-200 font-medium' %>
-      <%= f.collection_select :player_ids, Player.order(:name), :id, :name, {}, multiple: true, class: 'mt-2 outline-none bg-zinc-800 border border-zinc-700 px-5 py-2.5 w-full focus:ring-1 focus:ring-indigo-400 rounded-lg', data: { action: 'players#show_selected_players' } %>
-    </div>
-    <div class='mt-6 text-zinc-200' data-players-target='players'>
-
-    </div>
-    <%= f.hidden_field :game_id, value: params[:game_id] %>
-    <%= f.submit 'Vytvoriť tím', class: 'text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30' %>
-  <% end %>
+  <%= render 'form' %>
 </div>

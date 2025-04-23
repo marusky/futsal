@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :players, except: :destroy
-  resources :games, only: [:show, :create] do
+  resources :games, only: [:show, :create, :destroy] do
     member do
       get "matches", to: "games#matches"
       get "appearances", to: "games#appearances"

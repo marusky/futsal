@@ -1,0 +1,30 @@
+<%= form_with model: @team, class: 'group' do |f| %>
+  <div>
+    <%= f.label :name, 'Názov tímu (farba)', class: 'block text-zinc-200 font-medium' %>
+    <%= f.text_field :name, class: 'rounded-lg mt-2 outline-none bg-zinc-800 ring-1 ring-zinc-700 px-5 py-2.5 w-full focus:ring-1 focus:ring-indigo-400' %>
+    <% if @team.errors[:name].any? %>
+      <div class='text-sm mt-1 text-rose-400'>
+        <%= @team.errors.full_messages_for(:name).first %>
+      </div>
+    <% end %>
+  </div>
+  <div class='mt-6'>
+    <%= f.label :player_ids, 'Hráči', class: 'block text-zinc-200 font-medium' %>
+    <%= f.collection_select :player_ids, Player.order(:name), :id, :name, {}, multiple: true, class: 'mt-2 outline-none bg-zinc-800 border border-zinc-700 px-5 py-2.5 w-full focus:ring-1 focus:ring-indigo-400 rounded-lg', data: { players_target: 'select', action: 'players#showSelectedPlayers' } %>
+    <% if @team.errors[:players].any? %>
+      <div class='text-sm mt-1 text-rose-400'>
+        <%= @team.errors.messages_for(:players).first %>
+      </div>
+    <% end %>
+  </div>
+  <div class='mt-6 text-zinc-200' data-players-target='players'></div>
+  <%= f.hidden_field :game_id, value: @team.game_id %>
+  <%= button_tag type: :submit do %>
+    <div class='group-aria-busy:hidden text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-600 shadow-indigo-600/30'>
+      Uložiť
+    </div>
+  <% end %>
+  <div class='hidden group-aria-busy:block text-center fixed bottom-12 left-4 right-4 shadow-md px-5 py-4 rounded-xl bg-indigo-400 shadow-indigo-600/30'>
+    <%= icon 'fa-solid', 'spinner', class: 'animate-spin' %>
+  </div>
+<% end %>
