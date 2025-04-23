@@ -38,6 +38,12 @@ class StatisticsService
     end.sort_by { |team_obj| team_obj[:points] }.reverse
   end
 
+  def three_teams?
+    return unless @game_ids.count == 1
+
+    Game.find(@game_ids.first).three_teams?
+  end
+
   private
 
   def team_scores

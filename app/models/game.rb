@@ -12,4 +12,8 @@ class Game < ApplicationRecord
     started: 1,
     finished: 2,
   }, default: :being_created
+
+  def three_teams?
+    teams.count == 3
+  end
 end

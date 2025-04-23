@@ -12,7 +12,7 @@ class GamesController < ApplicationController
           .where(game: { id: @game.id })
           .order(:team_id)
     elsif @game.finished?
-      @service = StatisticsService.new(@game)
+      @service = StatisticsService.new([@game.id])
       @players = Player
         .joins(:teams)
         .where(teams: { game: @game })
