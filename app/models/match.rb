@@ -1,44 +1,26 @@
 class Match < ApplicationRecord
+  include Resultable
+
   belongs_to :game
   belongs_to :team_1, class_name: 'Team'
   belongs_to :team_2, class_name: 'Team'
 
-  validate :valid_second_match, if: :second_match?
+  after_update_commit -> { broadcast_replace_to :matches, partial: 'matches/match', locals: { match: self } }
+  after_create_commit -> { broadcast_append_to :matches, partial: 'matches/match', locals: { match: self } }
 
-  after_update_commit -> { broadcast_replace_to :matches }
-  after_create_commit -> { broadcast_append_to :matches }
+  def assign_team_ids(team_ids)
+    self.team_1_id, self.team_2_id = team_ids
 
-  def winner
-    if goals_team_1 > goals_team_2
-      team_1
-    elsif goals_team_1 < goals_team_2
-      team_2
-    else
-      nil
-    end
+    self
   end
 
-  def loser
-    if goals_team_1 < goals_team_2
-      team_1
-    elsif goals_team_1 > goals_team_2
-      team_2
-    else
-      nil
-    end
+  def response_type
+    raise NotImplementedError, "#{self.class.name} must implement #response_type"
   end
 
-  private
+  protected
 
-  def second_match?
-    Match.where(game_id: game.id).count == 1
-  end
-
-  def valid_second_match
-    first_match = game.matches.order(:id).first
-    if team_1_id == first_match.team_1_id && team_2_id == first_match.team_2_id ||
-      team_1_id == first_match.team_2_id && team_2_id == first_match.team_1_id
-      errors.add(:base, 'V druhom zápase nemôžu hrať rovnaké tímy ako v prvom')
-    end
+  def team_ids
+    [team_1_id, team_2_id]
   end
 end

@@ -9,16 +9,14 @@ class MatchesController < ApplicationController
   end
   
   def create
-    match_service = MatchService.new(game: @game, team_ids:)
-    @match = match_service.new_match
+    @match = @game.build_next_match team_ids
 
     if @match.save
-      @game.started!
-      return redirect_to @match.game if match_service.teams_selected_by_user?
+      @game.started! if @game.being_created?
 
       respond_to do |format|
         format.html { redirect_to @match.game }
-        format.turbo_stream
+        format.turbo_stream if @match.response_type == :turbo_stream
       end
     else
       render :new, status: :unprocessable_entity
@@ -46,7 +44,7 @@ class MatchesController < ApplicationController
     ids = params.keys.map{ |key| key.delete_prefix 'team_id_' if key.to_s.start_with? 'team_id_' }.compact
     return unless ids.count == 2
 
-    { team_1_id: ids[0], team_2_id: ids[1] }
+    ids
   end
 
   def match_update_params

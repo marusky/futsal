@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_27_174714) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_04_132559) do
   create_table "appearances", force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "team_id", null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_174714) do
     t.integer "goals_team_2", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
     t.index ["game_id"], name: "index_matches_on_game_id"
     t.index ["team_1_id"], name: "index_matches_on_team_1_id"
     t.index ["team_2_id"], name: "index_matches_on_team_2_id"

@@ -1,11 +1,7 @@
 class Game < ApplicationRecord
-  has_many :matches, dependent: :delete_all
-  has_many :teams, dependent: :destroy
+  include Matchable
 
-  # TODO broadcast game starting and finishing
-  # after_update_commit -> do 
-  #   broadcast_replace_to :games 
-  # end, if: :saved_change_to_status?
+  has_many :teams, dependent: :destroy
 
   enum :status, {
     being_created: 0,

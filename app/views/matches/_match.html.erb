@@ -1,5 +1,5 @@
 <div id="<%= dom_id(match) %>" class='px-5 py-6 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl mb-4 [&:nth-child(3n)]:mb-10'>
-  <%= form_with model: match, data: { controller: 'auto-submit' } do |f| %>
+  <%= form_with model: match.becomes(Match), data: { controller: 'auto-submit' } do |f| %>
     <div class='flex justify-between items-center'>
       <div>
         <%= match.team_1.name %>
