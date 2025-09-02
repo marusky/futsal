@@ -84,7 +84,7 @@ class GamesController < ApplicationController
         @team_points[match.team_1_id] += 1
         @team_points[match.team_2_id] += 1
       else
-        @team_points[match.winner.id] += 3
+        @team_points[match.winner_id] += 3
       end
     end
   end

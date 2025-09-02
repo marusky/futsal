@@ -2,7 +2,12 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:edit, :update]
 
   def index
-    @players = Player.order(:name)
+    @players = Player
+      .select(:id, :name, "SUM(appearances.goals) as goals")
+      .includes(:teams)
+      .left_joins(:appearances)
+      .group(:id)
+      .order(goals: :desc)
   end
 
   def new

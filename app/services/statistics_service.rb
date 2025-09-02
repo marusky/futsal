@@ -58,8 +58,8 @@ class StatisticsService
         @_team_scores[match.team_1_id][:draws] += 1
         @_team_scores[match.team_2_id][:draws] += 1
       else
-        @_team_scores[match.winner.id][:wins] += 1
-        @_team_scores[match.loser.id][:loses] += 1
+        @_team_scores[match.winner_id][:wins] += 1
+        @_team_scores[match.loser_id][:loses] += 1
       end
     end
 

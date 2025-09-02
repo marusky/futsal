@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def home
-    @games = Game.all
+    @games = Game.order(created_at: :desc)
   end
 
   def statistics
