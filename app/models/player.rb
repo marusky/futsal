@@ -3,18 +3,42 @@ class Player < ApplicationRecord
   has_many :teams, through: :appearances
 
   def goals
-    appearances.sum(:goals)
+    appearances.sum(&:goals)
   end
 
-  def matches_won_count
-    teams.includes(:matches).sum(&:matches_won_count)
+  def goals_per_game
+    return 0 if appearances.none?
+
+    (appearances.sum(&:goals).to_f / appearances.size).round(2)
   end
 
-  def matches_drawn_count
-    teams.includes(:matches).sum(&:matches_drawn_count)
+  def wins
+    teams.sum(&:matches_won_count)
   end
 
-  def matches_lost_count
-    teams.includes(:matches).sum(&:matches_lost_count)
+  def wins_per_game
+    return 0 if appearances.none?
+
+    (wins.to_f / appearances.size).round(2)
+  end
+
+  def draws
+    teams.sum(&:matches_drawn_count)
+  end
+
+  def draws_per_game
+    return 0 if appearances.none?
+
+    (draws.to_f / appearances.size).round(2)
+  end
+
+  def losses
+    teams.sum(&:matches_lost_count)
+  end
+
+  def losses_per_game
+    return 0 if appearances.none?
+
+    (losses.to_f / appearances.size).round(2)
   end
 end

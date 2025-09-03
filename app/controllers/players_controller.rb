@@ -2,12 +2,13 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:edit, :update]
 
   def index
+    sort_by = "#{params[:order_by] || :goals}"
+    sort_by += "_per_game" if params[:score_type] == "per_game"
+
     @players = Player
-      .select(:id, :name, "SUM(appearances.goals) as goals")
-      .includes(:teams)
-      .left_joins(:appearances)
-      .group(:id)
-      .order(goals: :desc)
+      .includes(teams: [:appearances, :matches])
+      .sort_by { |player| player.send(sort_by) }
+      .reverse
   end
 
   def new

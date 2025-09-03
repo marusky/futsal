@@ -13,18 +13,22 @@
 <% end %>
 
 <div class='mt-4 space-y-4'>
+  <%= form_with url: players_path, method: :get, data: { controller: "auto-submit", auto_submit_delay_value: 100 } do |form| %>
+    <%= form.select :score_type, [["Celkovo", :total], ["Na hru", :per_game]],
+                    { selected: params[:score_type] },
+                    class: "text-center appearance-none px-5 py-3 rounded-xl bg-zinc-800 text-white",
+                    data: { action: "change->auto-submit#submit" }
+    %>
+  <% end %>
   <% @players.each do |player| %>
     <div class='p-5 bg-zinc-800 border border-zinc-700 shadow-md shadow-zinc-950/90 rounded-xl'>
-      <div class="uppercase text-zinc-400 text-sm font-semibold"><%= player.name %></div>
+      <div class="uppercase text-zinc-400 font-semibold"><%= player.name %></div>
       <div class="text-4xl mt-4">
-        <div><%= human_readable_goals player.goals %></div>
+        <%= main_score player %>
       </div>
       <div class="mt-4 flex gap-8 text-lg text-zinc-300">
-        <div><%= icon "fa-solid", "crown" %> <%= player.matches_won_count %></div>
-        <div><%= icon "fa-solid", "handshake" %> <%= player.matches_drawn_count %></div>
-        <div><%= icon "fa-solid", "skull-crossbones" %> <%= player.matches_lost_count %></div>
+        <%= other_scores player %>
       </div>
-      
       <%#= link_to 'Upraviť', edit_player_path(player), class: 'text-indigo-400' %>
     </div>
   <% end %>
